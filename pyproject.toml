@@ -38,6 +38,10 @@
 
 
 [dependency-groups]
+dev = [
+  "pre-commit>=4.0.1",
+  { include-group = "test" },
+]
 test = [
   "pytest>=8.3.3",
   "pytest-cov >=3",
@@ -49,3 +53,62 @@ test = [
 [tool.hatch]
   build.hooks.vcs.version-file = "src/array_api_typing/_version.py"
   version.source               = "vcs"
+
+
+[tool.coverage]
+  report.exclude_also = ['\.\.\.', 'if typing.TYPE_CHECKING:']
+  run.source          = ["array-api-typing"]
+  run.branch          = true
+
+
+[tool.mypy]
+  files                    = ["src", "tests"]
+  python_version           = "3.10"
+  enable_error_code        = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+
+  strict                   = true
+  disallow_incomplete_defs = true
+  disallow_untyped_defs    = true
+
+  warn_return_any          = true
+  warn_unreachable         = true
+  warn_unused_configs      = true
+
+
+[tool.pytest.ini_options]
+  addopts = [
+    "--showlocals",
+    "--strict-config",
+    "--strict-markers",
+    "-p no:doctest",    # using sybil
+    "-ra",
+  ]
+  filterwarnings = [
+    "error",
+    # Sybil
+    "ignore:Attribute s is deprecated and will be removed in Python 3\\.14:DeprecationWarning",
+    "ignore:ast\\.Str is deprecated and will be removed in Python 3\\.14:DeprecationWarning",
+  ]
+  log_cli_level = "INFO"
+  minversion = "8.3"
+  testpaths = ["src/", "tests/", "README.md", "docs"]
+  norecursedirs = ["docs/_build"]
+  xfail_strict = true
+
+
+[tool.ruff]
+  [tool.ruff.lint]
+    extend-select = ["ALL"]
+    ignore = [
+      "D203",    # 1 blank line required before class docstring
+      "D213",    # Multi-line docstring summary should start at the second line
+      "ISC001",  # Conflicts with formatter
+    ]
+  
+    [tool.ruff.lint.isort]
+        combine-as-imports = true
+        extra-standard-library = ["typing_extensions"]
+        known-local-folder = ["array_api_typing"]
+
+  [tool.ruff.format]
+    docstring-code-format = true
