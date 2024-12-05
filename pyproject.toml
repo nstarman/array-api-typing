@@ -99,14 +99,29 @@ test = [
 
 
 [tool.ruff]
+  preview = true
+  force-exclude = true
+
   [tool.ruff.lint]
     extend-select = ["ALL"]
     ignore = [
+      "CPY",     # Missing copyright notice at top of file (NOTE revisit when autofixable)
+      "COM812",  # Conflicts with formatter
+      "D105",    # Missing docstring in magic method
+      "D107",    # Missing docstring in __init__
       "D203",    # 1 blank line required before class docstring
       "D213",    # Multi-line docstring summary should start at the second line
+      "FBT",     # flake8-boolean-trap
+      "FIX",     # flake8-fixme
       "ISC001",  # Conflicts with formatter
     ]
   
+    [tool.ruff.lint.flake8-import-conventions]
+      banned-from = ["array_api_typing"]
+
+    [tool.ruff.lint.flake8-import-conventions.extend-aliases]
+      array_api_typing = "xpt"
+
     [tool.ruff.lint.isort]
         combine-as-imports = true
         extra-standard-library = ["typing_extensions"]
@@ -114,3 +129,4 @@ test = [
 
   [tool.ruff.format]
     docstring-code-format = true
+    line-ending = "lf"
