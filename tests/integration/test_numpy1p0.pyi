@@ -68,11 +68,11 @@ _: xpt.HasShape = nparr_i32
 _: xpt.HasShape = nparr_f32
 
 # =========================================================
-# `xpt.HasShape`
+# `xpt.HasSize`
 
-_: xpt.HasShape = nparr
-_: xpt.HasShape = nparr_i32
-_: xpt.HasShape = nparr_f32
+_: xpt.HasSize = nparr
+_: xpt.HasSize = nparr_i32
+_: xpt.HasSize = nparr_f32
 
 # =========================================================
 # `xpt.HasTranspose`

@@ -16,6 +16,7 @@ from typing_extensions import TypeVar
 
 NamespaceT_co = TypeVar("NamespaceT_co", covariant=True, default=ModuleType)
 DTypeT_co = TypeVar("DTypeT_co", covariant=True)
+# TODO: why does this have `default=object` but `DTypeT_co` doesn't?
 DeviceT_co = TypeVar("DeviceT_co", covariant=True, default=object)
 
 
